@@ -2,8 +2,8 @@
 Time=`date +%F-%H-%m-%S`
 num=`echo $RANDOM|cut -b 1`
 mkdir -p  ~/Desktop/douyin/`date +%F`/
-read -p "你好～ 请输入抖音分享过来的 URL: " url
-echo "正在提取真实无水印视频地址，请稍等 "
+read -p "你好～ 请输入抖音分享过来的 URL:(please paste share url) " url
+echo "正在提取真实无水印视频地址，请稍等(loading)"
 KEY=`echo $url|awk -F"http://v.douyin.com/" '{print$2}'|awk -F"/" '{print$1}'`
 ##echo ${KEY}
 curl -s  http://v.douyin.com/${KEY} |awk -F"href=\"" '{print$2}'|awk -F"</a" '{print$1}'|grep -v ^$ > curl1
@@ -17,7 +17,7 @@ filename=$filenamesource
 fi
 downurl=`curl -s  "http://dnqia.cn/ajax/analyze.php" -d "link=http://v.douyin.com/${KEY}"|jq .data.video|grep http|sed 's/\"//g'`
 wget -q $downurl -O ~/Desktop/douyin/`date +%F`/${filename}.mp4
-echo "文件已经下载好！(路径:~/Desktop/douyin/`date +%F`/)："
+echo "文件已经下载好！download success!(路径:~/Desktop/douyin/`date +%F`/)："
 ls ~/Desktop/douyin/`date +%F`/
 open ~/Desktop/douyin/`date +%F`/
 rm -rf curl1  url2  wgetlog
